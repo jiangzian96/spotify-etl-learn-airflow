@@ -10,7 +10,9 @@ import sqlite3
 
 # Generate your token here:  https://developer.spotify.com/console/get-recently-played/
 # Note: You need a Spotify account (can be easily created for free)
-
+DATABASE_LOCATION = "sqlite:///my_played_tracks.sqlite"
+USER_ID = "12177044118" # your Spotify username 
+TOKEN = "BQAUS3J1rgQKazrzvh1WSahUC-R51gZSlVj5WGF4Kaqv1Ex8WhpxXrdK2RV0LGlHJvMFo57cMqGDXvNsR9Y4d-3JP65T_-CaTkcikE7JSKfjqhw_gvz3xTzB8g4nWZRYMlsJB0m5P6x308-NFESwIg" # your Spotify API token
 
 
 def check_if_valid_data(df: pd.DataFrame) -> bool:
@@ -44,10 +46,10 @@ def check_if_valid_data(df: pd.DataFrame) -> bool:
 def run_spotify_etl():
     DATABASE_LOCATION = "sqlite:///my_played_tracks.sqlite"
     USER_ID = "12177044118" # your Spotify username 
-    TOKEN = "BQAUS3J1rgQKazrzvh1WSahUC-R51gZSlVj5WGF4Kaqv1Ex8WhpxXrdK2RV0LGlHJvMFo57cMqGDXvNsR9Y4d-3JP65T_-CaTkcikE7JSKfjqhw_gvz3xTzB8g4nWZRYMlsJB0m5P6x308-NFESwIg" # your Spotify API token
+    TOKEN = "BQCEPNrmg_B3EFzJHARTaGWG151GhVuRaX2LAoDLwz2Th86jzP-TMz4m2vqfCeY-6H-somgzMCtXRCUlnJlkzwXxGO90fudPaiKJiXpjEpGHScQ4QReRX5yowNLa3r2SffBnWKBF1sZoviRa1mnmPQ" # your Spotify API token
 
 
-    # Extract part of the ETL process
+      # Extract part of the ETL process
  
     headers = {
         "Accept" : "application/json",
@@ -61,7 +63,7 @@ def run_spotify_etl():
     yesterday_unix_timestamp = int(yesterday.timestamp()) * 1000
 
     # Download all songs you've listened to "after yesterday", which means in the last 24 hours      
-    r = requests.get("https://api.spotify.com/v1/me/player/recently-played?after={time}".format(time=yesterday_unix_timestamp), headers = headers)
+    r = requests.get("https://api.spotify.com/v1/me/player/recently-played?after={time}&limit=50".format(time=yesterday_unix_timestamp), headers = headers)
 
     data = r.json()
 
@@ -88,8 +90,8 @@ def run_spotify_etl():
     song_df = pd.DataFrame(song_dict, columns = ["song_name", "artist_name", "played_at", "timestamp"])
     
     # Validate
-    if check_if_valid_data(song_df):
-        print("Data valid, proceed to Load stage")
+    #if check_if_valid_data(song_df):
+        #print("Data valid, proceed to Load stage")
 
     # Load
 

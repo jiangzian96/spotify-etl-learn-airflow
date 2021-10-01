@@ -17,17 +17,16 @@ default_args = {
     'retry_delay': timedelta(minutes=1)
 }
 
-dag = DAG(
-    'spotify_dag',
-    default_args=default_args,
-    description='Our first DAG with ETL process!',
-    schedule_interval=timedelta(days=1),
-)
+with DAG(
+        dag_id='spotify_dag',
+        default_args=default_args,
+        description='ETL',
+        schedule_interval=timedelta(days=1),
+    ) as f:
 
-run_etl = PythonOperator(
-    task_id='whole_spotify_etl',
-    python_callable=run_spotify_etl,
-    dag=dag,
-)
+    run_etl = PythonOperator(
+        task_id='whole_spotify_etl',
+        python_callable=run_spotify_etl
+    )
 
 run_etl
