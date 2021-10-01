@@ -11,6 +11,8 @@ import sqlite3
 # Generate your token here:  https://developer.spotify.com/console/get-recently-played/
 # Note: You need a Spotify account (can be easily created for free)
 
+
+
 def check_if_valid_data(df: pd.DataFrame) -> bool:
     # Check if dataframe is empty
     if df.empty:
@@ -41,10 +43,11 @@ def check_if_valid_data(df: pd.DataFrame) -> bool:
 
 def run_spotify_etl():
     DATABASE_LOCATION = "sqlite:///my_played_tracks.sqlite"
-    USER_ID = ''
-    TOKEN = ''
+    USER_ID = "12177044118" # your Spotify username 
+    TOKEN = "BQAUS3J1rgQKazrzvh1WSahUC-R51gZSlVj5WGF4Kaqv1Ex8WhpxXrdK2RV0LGlHJvMFo57cMqGDXvNsR9Y4d-3JP65T_-CaTkcikE7JSKfjqhw_gvz3xTzB8g4nWZRYMlsJB0m5P6x308-NFESwIg" # your Spotify API token
 
-      # Extract part of the ETL process
+
+    # Extract part of the ETL process
  
     headers = {
         "Accept" : "application/json",
